@@ -1,55 +1,41 @@
-import throttle from "lodash.throttle";
-import { setStorage, getStorage, removeStorage } from "./storage";
+import throttle from 'lodash.throttle';
 
-const form = document.querySelector(".feedback-form");
-const storageKey = "feedback-form-state";
-let storage = getStorage(storageKey);
+const form = document.querySelector('.feedback-form');
+
 let formData = {};
 
-form.addEventListener("input", throttle(onFormInput, 500));
-form.addEventListener("submit", onFormSubmit);
+const localStorageData = JSON.parse(
+  localStorage.getItem('feedback-form-state')
+);
 
-function onFormInput(event) {
-  formData = storage;
-  formData[event.target.name] = event.target.value;
+console.log(localStorage);
 
-  setStorage(storageKey, formData);
-}
+const updateLoginForm = () => {
+  if (localStorage['feedback-form-state']) {
+    form.elements[0].value = localStorageData.email;
+    form.elements[1].value = localStorageData.message;
+  }
+};
+updateLoginForm();
 
-function onFormSubmit(event) {
-  event.preventDefault();
-  const {
-    elements: { email, message },
-  } = event.currentTarget;
+const onLoginFormInput = e => {
+  formData.email = form.elements[0].value;
+  formData.message = form.elements[1].value;
 
-  if (email.value === "" || message.value === "") {
-    return alert("Будь ласка заповніть поля");
+  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
+};
+
+const onLoginFormSubmit = e => {
+  e.preventDefault();
+  if (form.elements[0].value === '' || form.elements[1] === '') {
+    return alert('All fields of the form must be filled in!!!');
   }
 
-  console.log({ Email: email.value, Message: message.value });
+  console.log(formData);
+  form.reset();
+  localStorage.removeItem('feedback-form-state');
+  formData = {};
+};
 
-  formData = { email: "", message: "" };
-  storage = formData;
-  setStorage(storageKey, formData);
-  event.currentTarget.reset();
-}
-
-function containsАormValues() {
-  if (!storage) {
-    storage = {};
-    return;
-  }
-
-  if (storage.email === undefined) {
-    form.elements.email.value = "";
-  } else {
-    form.elements.email.value = storage.email;
-  }
-
-  if (storage.message === undefined) {
-    form.elements.message.value = "";
-  } else {
-    form.elements.message.value = storage.message;
-  }
-}
-containsАormValues();
+form.addEventListener('submit', onLoginFormSubmit);
+form.addEventListener('input', throttle(onLoginFormInput, 500));
