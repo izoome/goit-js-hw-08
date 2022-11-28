@@ -1,10 +1,9 @@
-import "simplelightbox/dist/simple-lightbox.min.css";
-import SimpleLightbox from "simplelightbox";
-import { galleryItems } from "./gallery-items";
+import 'simplelightbox/dist/simple-lightbox.min.css';
+import SimpleLightbox from 'simplelightbox';
+import { galleryItems } from './gallery-items';
 // Change code below this line
 
-// const galleryListItem = document.querySelectorAll(".gallery");
-const galleryListItem = document.querySelector(".gallery");
+const galleryListItem = document.querySelector('.gallery');
 
 const createGalleryListItem = galleryItems
   .map(
@@ -16,13 +15,11 @@ const createGalleryListItem = galleryItems
   <img class="gallery__image" src="${preview}" alt="${description}" />
 </a>`
   )
-  .join("");
+  .join('');
 
-galleryListItem.insertAdjacentHTML("afterbegin", `${createGalleryListItem}`);
+galleryListItem.insertAdjacentHTML('afterbegin', `${createGalleryListItem}`);
 
-// open simpleLightbox
-
-const gallerySimpleLightbox = new SimpleLightbox(".gallery a", {
-  captionsData: "alt",
+const gallerySimpleLightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
   captionDelay: 250,
 });

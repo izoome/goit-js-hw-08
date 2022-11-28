@@ -12,6 +12,7 @@ form.addEventListener("submit", onFormSubmit);
 function onFormInput(event) {
   formData = storage;
   formData[event.target.name] = event.target.value;
+
   setStorage(storageKey, formData);
 }
 
@@ -22,13 +23,12 @@ function onFormSubmit(event) {
   } = event.currentTarget;
 
   if (email.value === "" || message.value === "") {
-    return alert("Будь ласка заповніть поля!");
+    return alert("Будь ласка заповніть поля");
   }
 
   console.log({ Email: email.value, Message: message.value });
 
   formData = { email: "", message: "" };
-  //пустые ковычки
   storage = formData;
   setStorage(storageKey, formData);
   event.currentTarget.reset();
@@ -39,7 +39,7 @@ function containsАormValues() {
     storage = {};
     return;
   }
-  // return;
+
   if (storage.email === undefined) {
     form.elements.email.value = "";
   } else {
@@ -53,4 +53,3 @@ function containsАormValues() {
   }
 }
 containsАormValues();
-// containsАormValues();

@@ -19,5 +19,6 @@ player.setCurrentTime(currentTime).catch(function (error) {
   return;
 });
 
-// console.log(getStorage(key));
-// console.log(getCurrentTime);
+// console.log(setCurrentTime('')
+//   .then(function (seconds) {
+// console.log(getStorage(key))
